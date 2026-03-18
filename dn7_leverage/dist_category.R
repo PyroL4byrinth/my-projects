@@ -3,16 +3,18 @@
 # 値型判別用プログラム
 # データセットの10000行を対象に下記ルールに基づき型判定を行う
 # [ルール]
-#   [出力する（予測に使う）]
-#   ・低濃度          ：ユニーク数が100以下
-#   ・中濃度（整数）  ：低濃度・高濃度に含まれない整数値
-#   ・中濃度（実数）  ：低濃度・高濃度に含まれない実数値
-#   ・高濃度（数値系）：ユニーク数が20％以上かつ、単調性がない
-#   [出力しない（予測に使わない）]
-#   ・高濃度（ID系）  ：ユニーク数が20％以上かつ、単調性をある
-#   ・カテゴリ        ：数値以外（文字型）
-#   ・二値            ：0/1(true/false, on/off...)
-#   ・低数値          ：ユニーク数が1
+#   ・日本語名        ：英語名    ：説明
+#   -------------------------------------------------------------
+#   [出力する（予測に使う）]      ：
+#   ・低濃度          ：Low       ：ユニーク数が100以下
+#   ・中濃度（整数）  ：MidInt    ：低濃度・高濃度に含まれない整数値
+#   ・中濃度（実数）  ：MidFloat  ：低濃度・高濃度に含まれない実数値
+#   ・高濃度（数値系）：HighNum   ：ユニーク数が20％以上かつ、単調性がない
+#   [出力しない（予測に使わない）]：
+#   ・高濃度（ID系）  ：HighId    ：ユニーク数が20％以上かつ、単調性をある
+#   ・カテゴリ        ：Category  ：数値以外（文字型）
+#   ・二値            ：Binary    ：0/1(true/false, on/off...)
+#   ・低数値          ：Constant  ：ユニーク数が1
 #
 #############################################################
 
@@ -90,22 +92,22 @@ classify_col <- function(x, nm){
   x_chr <- as.character(x) 
   x_num <- suppressWarnings(as.numeric(x_chr))
   has_string <- any(!is.na(x_chr) & x_chr != "" & is.na(x_num))
-  if (has_string) return("カテゴリ値")
+  if (has_string) return("Category") # カテゴリ値
   
-  if(grepl("OK/NG情報", nm, fixed = TRUE)) return("二値")
+  if(grepl("OK/NG情報", nm, fixed = TRUE)) return("Binary") # 二値
   
   n <- length(unique(na.omit(x_num)))
-  if(n == 1) return("定数値")
-  if(n < 100) return("低濃度値")
+  if(n == 1) return("Constant") # 定数値
+  if(n < 100) return("Low") # 低濃度値
   if(n/10000 > 0.2) {
     if(mono_type(na.omit(x_num)) == "not-monotone"){
-      return("高濃度(数値系）")
+      return("HighNum") # 高濃度（数値系）
     }else{
-      return("高濃度（ID系）") 
+      return("HighId") # 高濃度（ID系）
     }
   }
   is_real <- any(abs(x_num - round(x_num)) > 1e-8, na.rm = TRUE)
-  if(is_real) "実数値" else "整数値"
+  if(is_real) "MidFloat" else "MidInt" # 実数値 or 整数値
 }
 
 ## 値型を判定

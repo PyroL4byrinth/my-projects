@@ -76,3 +76,26 @@ fit_condfreq <- function(x_data, y_data, alpha = 1, na_level = "<NA>"){
   structure(list(x_cols=x_cols, y_models=y_models, na_level=na_level), class = "coondfreq_model") # 返り値
   
 }
+
+### ポアソン(Poisson)
+fit_poisson <- function(x_data, y_data){
+  
+  m <- glm(y_data ~ x_data, family = poisson(link="log"), data = )
+  m # 返り値
+
+}
+
+### 条件付きカーネル密度
+fit_nonparametric <- function(x_data, y_data){
+  
+  xdf <- data.frame(x = factor(x_data))
+  
+  n_per <- 2000  # 目安: 1000〜5000  
+  idx <- unlist(tapply(seq_along(y_data), xdf$x, function(ii)  
+    if (length(ii) <= n_per) ii else sample(ii, n_per)  
+  ))  
+  
+  bw <- npcdensbw(xdat = xdf[idx,,drop=FALSE], ydat = y_data[idx], nmulti = 1)  
+  list(bw = bw, x_levels = levels(xdf$x))
+  
+}

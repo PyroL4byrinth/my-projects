@@ -23,7 +23,7 @@ gc(); gc()
 
 ## パッケージ読み込み & インストール
 Force <- FALSE
-pkgs <- c("dplyr", "data.table", "ggplot2", "plotly","caret")
+pkgs <- c("dplyr", "data.table", "ggplot2", "plotly","caret","np")
 for (pkg in pkgs){
   # 読み込みに失敗したらインストールしてから再読み込み
   # require()：パッケージの読み込み時、失敗した場合FLASEを返して続行する関数
@@ -47,9 +47,9 @@ CATEGORY_DATA <- "./output/category_lin2.csv"
 PROCESS_NUMBER <- "./source/ProcessNumber.csv"
 
 ## 説明変数(X)と目的変数(Y)
-X_NAME <- "sum_equip_item_name - 部品組付_測定値|締付トルク - value"
-Y_NAME <- "sum_equip_item_name - 熱かしめ_測定値|コイル熱かしめ温度1 - value"
-x <- 1.881
+X_NAME <- "sum_equip_item_name - 熱かしめ_測定値|コイル熱かしめ温度1 - value"
+Y_NAME <- "sum_equip_item_name - はんだ付_測定値|コイル端子位置座標X1 - value"
+x <- 300
 
 ## CSV読み込み
 df <- read.csv(DATA_SOURCES, header = TRUE, check.names = FALSE)
@@ -61,34 +61,48 @@ X_CATEGORY = df_cat$type[df_cat$fullname == X_NAME]
 Y_CATEGORY = df_cat$type[df_cat$fullname == Y_NAME]
 XY_CATEGORY = paste0(X_CATEGORY, "_", Y_CATEGORY)
 
-## 学習
-m <- fit_condfreq(
-  df_xy[[X_NAME]],
-  df_xy[[Y_NAME]]
+## 学習（Yは多変量もOK） 
+m <- switch(XY_CATEGORY,
+  "Low_Low" = fit_condfreq(df_xy[[X_NAME]],df_xy[[Y_NAME]]),
+  "Low_MidInt" = fit_poisson(df_xy[[X_NAME]],df_xy[[Y_NAME]]),
+  "Low_MidFloat" = fit_nonparametric(df_xy[[X_NAME]], df_xy[[Y_NAME]]),
+  "Low_HighNum" = "",
+  "MidInt_Low" = "",
+  "MidInt_MidInt" = "",
+  "MidInt_MidFloat" = "",
+  "MidInt_HighNum" = "",
+  "MidFloat_Low" = "",
+  "MidFloat_MidInt" = "",
+  "MidFloat_MidFloat" = "",
+  "MidFloat_HighNum" = "",
+  "HighNum_Low" = "",
+  "HighNum_MidInt" = "",
+  "HighNum_MidFloat" = "",
+  "HighNum_HighNum" = ""
 )
 
-## 予測（X複数、Y複数もOK） 
+## 予測（Yは多変量もOK） 
 res <- switch(XY_CATEGORY,
-  "低濃度値_低濃度値" = predict_condfreq(m, x, type = "prob"),
-  "低濃度_中濃度（整数）" = "",
-  "低濃度_中濃度（実数）" = "",
-  "低濃度_高濃度（数値）" = "",
-  "中濃度（整数）_低濃度" = "",
-  "中濃度（整数）_中濃度（整数）" = "",
-  "中濃度（整数）_中濃度（実数）" = "",
-  "中濃度（整数）_高濃度（数値）" = "",
-  "中濃度（実数）_低濃度" = "",
-  "中濃度（実数）_中濃度（整数）" = "",
-  "中濃度（実数）_中濃度（実数）" = "",
-  "中濃度（実数）_高濃度（数値）" = "",
-  "高濃度（数値）_低濃度" = "",
-  "高濃度（数値）_中濃度（整数）" = "",
-  "高濃度（数値）_中濃度（実数）" = "",
-  "高濃度（数値）_高濃度（数値）" = ""
+  "Low_Low" = predict_condfreq(m, x, type = "prob"),
+  "Low_MidInt" = predict_poisson(m, x),
+  "Low_MidFloat" = predict_nonparamestic(m, x, df_xy[[Y_NAME]]),
+  "Low_HighNum" = "",
+  "MidInt_Low" = "",
+  "MidInt_MidInt" = "",
+  "MidInt_MidFloat" = "",
+  "MidInt_HighNum" = "",
+  "MidFloat_Low" = "",
+  "MidFloat_MidInt" = "",
+  "MidFloat_MidFloat" = "",
+  "MidFloat_HighNum" = "",
+  "HighNum_Low" = "",
+  "HighNum_MidInt" = "",
+  "HighNum_MidFloat" = "",
+  "HighNum_HighNum" = ""
 )
 
 # グラフ化
-p <- ggplot(res, aes(x = res$y, y = res$p)) +
+p <- ggplot(res, aes(x = res$y, y = res$f)) +
       geom_point() +
       geom_line()
 

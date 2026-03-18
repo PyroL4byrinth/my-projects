@@ -69,3 +69,39 @@ predict_condfreq <- function(model, x, y_col = NULL, type = c("class", "prob")){
     return(res[which.max(p), y])
   }
 }
+
+###ポアソン(Poisson)
+predict_poisson <- function(model, x, tail = 1e-4){
+  lambda = predict(m, newdata = data.frame(x_data=x), type='response')
+  K <-qpois(1 - tail, lambda)
+  k <- 0:K
+  p <- dpois(k,lambda)
+  data.frame(x=x, y=k, p=p, tail_prob=1-sum(p)) # , lambda=lambda
+  
+}
+
+### 条件付きカーネル密度（nonparametric）
+predict_nonparamestic <- function(model, x, y_data){
+  
+  y <- y_data
+  
+  # 文字/因子なら数値化（必要に応じて）  
+  if (!is.numeric(y)) y <- suppressWarnings(as.numeric(y))  
+  
+  # NA, NaN, Inf を除外  
+  y <- y[is.finite(y)]  
+  
+  if (length(y) == 0) stop("Y が有限な数値を1つも含みません")  
+  
+  y_grid <- seq(min(y), max(y), length.out = 500) 
+
+  ex <- data.frame(x = factor(x, levels = model$x_levels))
+  if (anyNA(ex$x)) stop("")
+  
+  ey <- data.frame(y = y_grid)
+  res <- npcdens(bws = model$bw, exdat = ex, eydat = ey)
+  
+  f <- if(!is.null(res$condens)) res$condens else res$dens
+  data.frame(y = y_grid, f = as.numeric(f))
+  
+}
