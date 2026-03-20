@@ -77,8 +77,10 @@
 
 <br><br>
 <div>DATA02_ｴﾊﾞ位置決め部押え1 前進</div>
-<img src="./img/DATA2_OK_20260225.png" width = 49.5%>
-<img src="./img/DATA2_OK_ZOOM_20260225.png" width = 49.5%>
+<p>
+    <img src="./img/DATA2_OK_20260225.png">
+    <img src="./img/DATA2_OK_ZOOM_20260225.png">
+</p>
 ⇒イメージ通り。前進が入って、前進端がONしたと同時に、前進の自己保持が切れる
 
 
