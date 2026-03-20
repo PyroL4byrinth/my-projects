@@ -4,7 +4,7 @@
 <div style="display:flex; gap:24px;">
 
 <table>
-  <div>DATA11_ﾃｰﾌﾞﾙ位置決め 下降の生データ</div>
+  DATA11_ﾃｰﾌﾞﾙ位置決め 下降の生データ
   <tr><th>TIME</th><th>Value</th></tr>
   <tr><td>2026/2/25 15:42</td><td>1489569</td></tr>
   <tr><td>2026/2/25 15:42</td><td>1500710</td></tr>
@@ -29,7 +29,7 @@
 </table>
 
 <table>
-  <div>DATA01_ｴﾊﾞ位置決め部押え1 後退</div>
+  DATA01_ｴﾊﾞ位置決め部押え1 後退
   <tr><th>TIME</th><th>Value</th></tr>
   <tr><td>2026/2/25 15:42</td><td>1489569</td></tr>
   <tr><td>2026/2/25 15:42</td><td>1500710</td></tr>
@@ -54,6 +54,7 @@
 </table>
 
 </div>
+
 ![全体画像_DATA11](./img/DATA11_plot.png)
 
 ![全体画像_DATA01](./img/DATA02_plot.png)
