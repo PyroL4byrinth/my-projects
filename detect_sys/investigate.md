@@ -2,8 +2,14 @@
 ### 時間データを確認
 
 <div style="display:flex; gap:24px;">
-
-<table style = "outline:none">
+<head>
+    <style>
+        muluti_table {
+            border: none;
+        }
+    </style>
+</head>
+<table style = "outline:none;">
     <tr>
         <td> 
             <table>
