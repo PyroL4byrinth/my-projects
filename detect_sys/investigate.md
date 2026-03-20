@@ -3,9 +3,9 @@
 
 <div style="display:flex; gap:24px;">
 
-<table>
+<table style = "outline:none">
     <tr>
-        <td style = "border:none"> 
+        <td> 
             <table>
             <div>DATA11_ﾃｰﾌﾞﾙ位置決め 下降の生データ</div>
             <tr><th>TIME</th><th>Value</th></tr>
