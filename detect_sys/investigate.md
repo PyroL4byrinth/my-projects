@@ -2,13 +2,7 @@
 ### 時間データを確認
 
 <div style="display:flex; gap:24px;">
-<head>
-    <style>
-        muluti_table {
-            border: none;
-        }
-    </style>
-</head>
+
 <table style = "outline:none;">
     <tr>
         <td> 
@@ -73,24 +67,19 @@
 ![全体画像_DATA01](./img/DATA02_plot.png)
 
 
+### 生データをグラフで確認
+<div>DATA11_ﾃｰﾌﾞﾙ位置決め 下降</div>
+<img src="./img/DATA11_NG_20260225.png" width = 49.5%>
+<img src="./img/DATA11_NG_ZOOM_20260225.png" width = 49.5%>
+⇒下降の指示(0, 1)と、下降端の指示(0, 1)がなんとなくイメージと乖離する
+<div>全体がずれているわけでもなく、うまく重なっているところもある</div>
+<img src="./img/DATA11_OK_20260225.png" width = 49.5%>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br><br>
+<div>DATA02_ｴﾊﾞ位置決め部押え1 前進</div>
+<img src="./img/DATA2_OK_20260225.png" width = 49.5%>
+<img src="./img/DATA2_OK_ZOOM_20260225.png" width = 49.5%>
+⇒イメージ通り。前進が入って、前進端がONしたと同時に、前進の自己保持が切れる
 
 
 ## 書き方参考
