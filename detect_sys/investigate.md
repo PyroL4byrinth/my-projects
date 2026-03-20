@@ -1,5 +1,5 @@
 # 調査
-[data11　ﾃｰﾌﾞﾙ位置決め 下降]をはじめ、データが怪しい
+### 時間データを確認
 
 <div style="display:flex; gap:24px;">
 
@@ -7,8 +7,8 @@
     <tr>
         <td> 
             <table>
-            <div>DATA11_ﾃｰﾌﾞﾙ位置決め 下降の生データ</div>
-            <tr><th>TIME</th><th>Value</th></tr>
+            <div>DATA11_ﾃｰﾌﾞﾙ位置決め 下降</div>
+            <tr><th>TIME</th><th>Value (ms)</th></tr>
             <tr><td>2026/2/25 15:42</td><td>1489569</td></tr>
             <tr><td>2026/2/25 15:42</td><td>1500710</td></tr>
             <tr><td>2026/2/25 15:43</td><td>1496740</td></tr>
@@ -61,6 +61,7 @@
 </table>
 </div>
 
+###　グラフで確認
 ![全体画像_DATA11](./img/DATA11_plot.png)
 
 ![全体画像_DATA01](./img/DATA02_plot.png)
