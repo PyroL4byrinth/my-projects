@@ -61,7 +61,7 @@
 </table>
 </div>
 
-###　グラフで確認
+### グラフで確認
 ![全体画像_DATA11](./img/DATA11_plot.png)
 
 ![全体画像_DATA01](./img/DATA02_plot.png)
